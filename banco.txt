@@ -1,0 +1,88 @@
+drop database estoque;
+create database estoque;
+use estoque;
+create table usuario(
+id_usuario int primary key auto_increment not null,
+nome varchar (180),
+email varchar (200),
+cpf varchar (11) unique,
+senha varchar (180)
+);
+
+create table item (
+id_item int primary key auto_increment,
+dataEntrada DATE,
+material varchar (180),
+unidade varchar (180),
+quantidade int,
+fornecedor varchar (180),
+tipo varchar (200),
+categoria varchar (200)
+);
+
+create table item_emprestimo (
+id_item int primary key auto_increment,
+dataEntrada DATE,
+material varchar (180),
+unidade varchar (180),
+quantidade int,
+fornecedor varchar (180),
+tipo varchar (200),
+categoria varchar (200)
+);
+
+create table devolucao(
+id_devolucao int primary key auto_increment,
+dataDevolucao DATE,
+itemDevolucao varchar (180),
+unidadeDevolucao varchar (180),
+qntdDevolucao int,
+categoriaDevolucao varchar (200), 
+motivoDevolucao varchar (200)
+);
+
+create table chave(
+id_chave int primary key auto_increment,
+sala varchar (180),
+pessoaRetirada varchar (180),
+dataRetirada DATE,
+estado varchar (180)
+);
+
+CREATE TABLE itens_retirados (
+id_retirada INT AUTO_INCREMENT PRIMARY KEY,
+id_item INT NOT NULL,
+material VARCHAR(100) NOT NULL,
+quantidade_retirada INT NOT NULL,
+data_retirada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+tipo varchar (200),
+FOREIGN KEY (id_item) REFERENCES item (id_item)
+);
+
+DELETE FROM usuario
+WHERE id_usuario = 1;
+show tables from usuario;
+DESCRIBE estoque.usuario;
+drop table devolucao;
+
+drop table empr_pr;
+
+CREATE TABLE empr_pr (
+  id_emprPR INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  mutuario_empr VARCHAR(50) NOT NULL,
+  quantidade_empr INT(8) NOT NULL,
+  data_empr DATE NOT NULL,
+  produto_empr VARCHAR(25) NOT NULL,
+);
+
+ALTER TABLE itens_retirados ADD CONSTRAINT fk_itens_retirados_id_item FOREIGN KEY (id_item) REFERENCES item (id_item);
+/*
+alter table <tabela_origem> add constraint <nome_restricao> foreing key (<campo_tabela_origem>) references <tabela_destino> (<campo_tabela_destino>);
+*/
+
+ALTER TABLE itens_retirados
+DROP FOREIGN KEY fk_itens_retirados_id_item;
+
+
+
+
